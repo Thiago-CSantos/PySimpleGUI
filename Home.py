@@ -14,8 +14,10 @@ def janela_TelaInicial():
 
     return janela
 
-# def cadastrar():
-#
+#def cadastrar():
+
+
+
 def editar():
     layout =[
         [sg.Text('Editando')],
@@ -30,17 +32,18 @@ def editar():
 janela1, janela2, janela3, janela4 = janela_TelaInicial(), None, None, None
 
 while True:
-    window, evento, valores = sg.read_all_windows() #ou window.read()
+    #window, evento, valores = sg.read_all_windows()
+    evento, valores = janela1.read()
 
-    if(window == janela1 and evento == sg.WINDOW_CLOSED):
+    if(evento == sg.WINDOW_CLOSED):
         break
 
-    if window == janela1 and evento == 'Editar':
-        janela3 = editar()
+    if evento == 'Editar':
         janela1.hide()
+        janela3 = editar()
+        e, v = janela3.read()
 
-    if(window == janela3 and evento == 'Remover'):
-        janela1 = janela_TelaInicial()
-        janela3.un_hide()
+        if(e == 'Remover'):
+            janela1.un_hide() #volta para a janela 1
 
-window.close()
+janela1.close()
