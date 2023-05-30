@@ -67,7 +67,19 @@ def editar():
     return janela
 
 #Janela4
-# def sobre():
+def sobre():
+
+    layout = [
+        [sg.Listbox(values=['Nome: Thiago Carretero dos Santos, \n\nRafael Almeida Vasconcelos, \n\nRaphael Baruque Souza, \n\nGuilherme Dias Gregorio.',
+                            'Formação:',
+                            'Cargo:',
+                            'Local de trabalho:',
+                            'Area de atuação:'],size=(100,10))]
+    ]
+
+    janela = sg.Window('Informações sobre os Autores',layout=layout)
+    return janela
+
 
 janela1, janela2, janela3, janela4 = janela_TelaInicial(), None, None, None
 
@@ -116,5 +128,10 @@ while True:
 
         if (e == 'Remover'):
             janela1.un_hide()  # volta para a janela 1
+
+    if evento == 'Sobre':
+        janela1.hide()
+        janela4 = sobre()
+        e, v = janela4.read()
 
 janela1.close()
