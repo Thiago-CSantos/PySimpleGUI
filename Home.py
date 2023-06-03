@@ -45,9 +45,9 @@ def cadastrar():
 def editar():
     # para teste
     dados = [
-        ['0', '333.656.665-33', 'Rogério Colpani', 'Rua das Dores', 'Mococa', 'Ceará', 'Masculino', 'rogerio@gmail.com',
+        ['333.656.665-33', 'Rogério Colpani', 'Rua das Dores', 'Mococa', 'Ceará', 'Masculino', 'rogerio@gmail.com',
          '10/10/1980', 'só observo você']]
-    cabecalho = ['Row', 'CPF', 'NOME', 'ENDEREÇO', 'CIDADE', 'ESTADO', 'SEXO', 'E-MAIL', 'DATA-DE-NASCIMENTO',
+    cabecalho = ['CPF', 'NOME', 'ENDEREÇO', 'CIDADE', 'ESTADO', 'SEXO', 'E-MAIL', 'DATA-DE-NASCIMENTO',
                  'OBSERVAÇÕES']
 
     layout = [
@@ -56,11 +56,12 @@ def editar():
         ], justification='center')],
 
         [sg.Column([
-            [sg.Table(values=dados, headings=cabecalho, justification='center', enable_click_events=True, key='-tabela-')],
+            [sg.Table(values=dados, headings=cabecalho, justification='center',
+                      enable_click_events=True, key='-tabela-', display_row_numbers=True, auto_size_columns=True)],
         ], justification='center')],
 
         [sg.Column([
-            [sg.Button('Voltar')],
+            [sg.Button('Remover')],
         ], justification='center')]
     ]
     janela = sg.Window('Editando', layout=layout, finalize=True, )
@@ -107,27 +108,36 @@ while True:
             dataNascimento = v['-dntNascimento-']
             observacoes = v['-obs-']
 
+            dado = [cpf, nome, endereco, cidade, estado, sexo, email, dataNascimento, observacoes]
+
             # Adiciona os novos dados à tabela
             janela3 = editar()
             tabela = janela3['-tabela-']
 
             tabelaValores = tabela.Get()# Obtém os valores atuais da tabela
-            tabelaValores.append([cpf, nome, endereco, cidade, estado, sexo, email, dataNascimento, observacoes])# Adiciona uma nova linha aos valores
+            tabelaValores.append(dado)# Adiciona uma nova linha aos valores
             tabela.update(values=tabelaValores)
 
-            result = sg.popup('Cadastro realizado com Sucesso!!!', button_color='#0079d3')
+    if (e == 'Remover'):
+        tabela = janela3['-tabela-']
+        index = tabela.SelectedRows[0]
+        dado.Values
+        dado.pop(index)
 
-        if (result == 'OK'):
-            janela2.hide()
-            print(result)
+        tabela.update(values=dado)
+        janela3['-tabela-'].update(select_rows=[-1])
+        print(index)
+
+            # result = sg.popup('Cadastro realizado com Sucesso!!!', button_color='#0079d3')
+
+
+
 
     if evento == 'Editar':
         janela1.hide()
         janela3 = editar()
         e, v = janela3.read()
 
-        if (e == 'Remover'):
-            janela1.un_hide()  # volta para a janela 1
 
     if evento == 'Sobre':
         janela1.hide()
